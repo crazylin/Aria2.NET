@@ -4,6 +4,10 @@ Aria2c .NET wrapper library written in C#
 
 Supports all methods for the HTTP RPC Aria2 client.
 
+## AOT Support
+
+This library is compatible with Ahead-of-Time (AOT) compilation, allowing you to build self-contained, high-performance applications with .NET 8 and later.
+
 ## Usage
 
 Setup Aria2c with RPC access enabled:
