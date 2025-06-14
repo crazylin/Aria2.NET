@@ -388,9 +388,9 @@ public class Aria2NetClient
                                                         new Object[] { "aria2.tellWaiting", 0, 1000 },
                                                         new Object[] { "aria2.tellActive" });
 
-        var results1 = JsonConvert.DeserializeObject<List<DownloadStatusResult>>(results[0].ToString()) ?? new List<DownloadStatusResult>();
-        var results2 = JsonConvert.DeserializeObject<List<DownloadStatusResult>>(results[1].ToString()) ?? new List<DownloadStatusResult>();
-        var results3 = JsonConvert.DeserializeObject<List<DownloadStatusResult>>(results[2].ToString()) ?? new List<DownloadStatusResult>();
+        var results1 = JsonSerializer.Deserialize<List<DownloadStatusResult>>(((JsonElement)results[0]).GetRawText()) ?? new List<DownloadStatusResult>();
+        var results2 = JsonSerializer.Deserialize<List<DownloadStatusResult>>(((JsonElement)results[1]).GetRawText()) ?? new List<DownloadStatusResult>();
+        var results3 = JsonSerializer.Deserialize<List<DownloadStatusResult>>(((JsonElement)results[2]).GetRawText()) ?? new List<DownloadStatusResult>();
             
         return results1.Concat(results2).Concat(results3).ToList();
     }
