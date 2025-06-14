@@ -1,5 +1,5 @@
-﻿using Aria2NET.Apis;
-using Newtonsoft.Json;
+﻿using System.Text.Json;
+using Aria2NET.Apis;
 
 namespace Aria2NET;
 

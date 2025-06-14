@@ -1,27 +1,27 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Aria2NET;
 
 public class Request
 {
-    [JsonProperty("id")]
+    [JsonPropertyName("id")]
     public String Id { get; set; } = null!;
 
-    [JsonProperty("jsonrpc")]
+    [JsonPropertyName("jsonrpc")]
     public String Jsonrpc { get; set; } = null!;
 
-    [JsonProperty("method")]
+    [JsonPropertyName("method")]
     public String Method { get; set; } = null!;
 
-    [JsonProperty("params")]
+    [JsonPropertyName("params")]
     public IList<Object?>? Parameters { get; set; }
 }
 
 public class MulticallRequest
 {
-    [JsonProperty("methodName")]
+    [JsonPropertyName("methodName")]
     public String MethodName { get; set; } = null!;
 
-    [JsonProperty("params")]
+    [JsonPropertyName("params")]
     public IList<Object> Parameters { get; set; } = new List<Object>();
 }

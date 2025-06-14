@@ -1,24 +1,24 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Aria2NET;
 
 public class GlobalStatResult
 {
-    [JsonProperty("downloadSpeed")]
+    [JsonPropertyName("downloadSpeed")]
     public Decimal DownloadSpeed { get; set; }
 
-    [JsonProperty("numActive")]
+    [JsonPropertyName("numActive")]
     public Int32 NumActive { get; set; }
 
-    [JsonProperty("numStopped")]
+    [JsonPropertyName("numStopped")]
     public Int32 NumStopped { get; set; }
 
-    [JsonProperty("numStoppedTotal")]
+    [JsonPropertyName("numStoppedTotal")]
     public Int32 NumStoppedTotal { get; set; }
 
-    [JsonProperty("numWaiting")]
+    [JsonPropertyName("numWaiting")]
     public Int32 NumWaiting { get; set; }
 
-    [JsonProperty("uploadSpeed")]
+    [JsonPropertyName("uploadSpeed")]
     public Decimal UploadSpeed { get; set; }
 }

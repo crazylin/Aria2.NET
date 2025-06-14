@@ -1,24 +1,24 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Aria2NET;
 
 public class ServerResult
 {
-    [JsonProperty("index")]
+    [JsonPropertyName("index")]
     public String Index { get; set; } = null!;
 
-    [JsonProperty("servers")]
+    [JsonPropertyName("servers")]
     public List<ServerResultServer> Servers { get; set; } = new List<ServerResultServer>();
 }
 
 public class ServerResultServer
 {
-    [JsonProperty("currentUri")]
+    [JsonPropertyName("currentUri")]
     public String CurrentUri { get; set; } = null!;
 
-    [JsonProperty("downloadSpeed")]
+    [JsonPropertyName("downloadSpeed")]
     public Decimal DownloadSpeed { get; set; }
 
-    [JsonProperty("uri")]
+    [JsonPropertyName("uri")]
     public String Uri { get; set; } = null!;
 }

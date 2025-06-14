@@ -1,7 +1,8 @@
 ﻿using System.Net;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Aria2NET.Exceptions;
-using Newtonsoft.Json;
 
 namespace Aria2NET.Apis;
 
@@ -9,6 +10,15 @@ internal class Requests
 {
     private readonly HttpClient _httpClient;
     private readonly Store _store;
+    private static readonly JsonSerializerOptions s_jsonSerializerOptions;
+
+    static Requests()
+    {
+        s_jsonSerializerOptions = new JsonSerializerOptions
+        {
+            TypeInfoResolver = Aria2NetJsonSerializerContext.Default
+        };
+    }
 
     public Requests(HttpClient httpClient, Store store)
     {
@@ -41,9 +51,9 @@ internal class Requests
             }
         }
 
-        var jsonRequest = JsonConvert.SerializeObject(request);
+        var jsonRequest = JsonSerializer.Serialize(request, typeof(Request), s_jsonSerializerOptions);
 
-        var content = new StringContent(jsonRequest);
+        var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
 
         var retryCount = 0;
         while (true)
@@ -106,11 +116,11 @@ internal class Requests
 
         try
         {
-            return JsonConvert.DeserializeObject<T>(result) ?? throw new JsonSerializationException();
+            return JsonSerializer.Deserialize<T>(result, s_jsonSerializerOptions) ?? throw new JsonException();
         }
-        catch (JsonSerializationException ex)
+        catch (JsonException ex)
         {
-            throw new JsonSerializationException($"Unable to deserialize Aria2 API response to {typeof(T).Name}. Response was: {result}", ex);
+            throw new JsonException($"Unable to deserialize Aria2 API response to {typeof(T).Name}. Response was: {result}", ex);
         }
     }
         
@@ -183,18 +193,18 @@ internal class Requests
 
         try
         {
-            var result = JsonConvert.DeserializeObject<RequestResult<List<List<Object>>>>(requestResult) ?? throw new JsonSerializationException();
+            var result = JsonSerializer.Deserialize<RequestResult<List<List<Object>>>>(requestResult, s_jsonSerializerOptions) ?? throw new JsonException();
 
             if (result.Result == null)
             {
-                throw new JsonSerializationException();
+                throw new JsonException();
             }
 
             return result.Result.Select(m => m.First()).ToList();
         }
-        catch (JsonSerializationException ex)
+        catch (JsonException ex)
         {
-            throw new JsonSerializationException($"Unable to deserialize Aria2 API response. Response was: {requestResult}", ex);
+            throw new JsonException($"Unable to deserialize Aria2 API response. Response was: {requestResult}", ex);
         }
     }
         
@@ -207,7 +217,7 @@ internal class Requests
                 return null;
             }
 
-            var requestError = JsonConvert.DeserializeObject<RequestResult<RequestError>>(text);
+            var requestError = JsonSerializer.Deserialize<RequestResult<RequestError>>(text, s_jsonSerializerOptions);
 
             if (requestError?.Error != null)
             {

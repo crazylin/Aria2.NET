@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Aria2NET;
 
@@ -10,37 +10,37 @@ public class FileResult
     ///     only includes completed pieces. On the other hand, completedLength in aria2.tellStatus() also includes partially
     ///     completed pieces.
     /// </summary>
-    [JsonProperty("completedLength")]
+    [JsonPropertyName("completedLength")]
     public Int64 CompletedLength { get; set; }
 
     /// <summary>
     ///     Index of the file, starting at 1, in the same order as files appear in the multi-file torrent.
     /// </summary>
-    [JsonProperty("index")]
+    [JsonPropertyName("index")]
     public Int32 Index { get; set; }
 
     /// <summary>
     ///     File size in bytes.
     /// </summary>
-    [JsonProperty("length")]
+    [JsonPropertyName("length")]
     public Int64 Length { get; set; }
 
     /// <summary>
     ///     File path.
     /// </summary>
-    [JsonProperty("path")]
+    [JsonPropertyName("path")]
     public String Path { get; set; } = null!;
 
     /// <summary>
     ///     true if this file is selected by --select-file option. If --select-file is not specified or this is single-file
     ///     torrent or not a torrent download at all, this value is always true. Otherwise false.
     /// </summary>
-    [JsonProperty("selected")]
+    [JsonPropertyName("selected")]
     public Boolean Selected { get; set; }
 
     /// <summary>
     ///     Returns a list of URIs for this file. The element type is the same struct used in the aria2.getUris() method.
     /// </summary>
-    [JsonProperty("uris")]
+    [JsonPropertyName("uris")]
     public List<UriResult> Uris { get; set; } = new List<UriResult>();
 }

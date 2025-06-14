@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Aria2NET;
 
 public class RequestError
 {
-    [JsonProperty("code")]
+    [JsonPropertyName("code")]
     public Int64 Code { get; set; }
 
-    [JsonProperty("message")]
+    [JsonPropertyName("message")]
     public String? Message { get; set; }
 }
